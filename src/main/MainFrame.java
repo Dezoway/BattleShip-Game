@@ -8,8 +8,15 @@ import java.io.IOException;
 
 public class MainFrame extends JFrame {
     private GameArea area;
+    ImageLoader imageLoader;
+    SoundLoader soundLoader;
+    AnimationLoader animationLoader;
     public MainFrame(){
         super("BattleShip");
+        imageLoader = new ImageLoader();
+        soundLoader = new SoundLoader();
+        animationLoader = new AnimationLoader();
+        area = new GameArea();
         prepareFrame();
 
     }
@@ -18,15 +25,14 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
         JLayeredPane jLayeredPane = getLayeredPane();
         JLabel label = new JLabel();
-        try{
-            Image img = ImageIO.read(new File("src/resources/GameArea.png"));
-            img = img.getScaledInstance(700,750,Image.SCALE_DEFAULT);
-            label.setIcon(new ImageIcon(img));
-        }catch (IOException e){
-
-        }
+        Image img = (Image) imageLoader.getResource("GameArea.png");
+        img =  imageLoader.setSizeImage(img, 700,750);
+        label.setIcon(new ImageIcon(img));
         label.setSize(700,750);
-        this.add(label);
-        this.setResizable(false);
+        jLayeredPane.add(label,1);
+        for(int x = 0; x != area.panels.size(); x++){
+            jLayeredPane.add(area.panels.get(x),2);
+        }
+        //this.setResizable(false);
     }
 }
