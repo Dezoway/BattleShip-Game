@@ -21,6 +21,8 @@ public class Panel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+        g.setColor(Color.YELLOW);
+        g.drawRect(0,0,sizeX,sizeY);
 
     }
 }

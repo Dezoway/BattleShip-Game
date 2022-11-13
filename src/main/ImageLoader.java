@@ -22,7 +22,6 @@ public class ImageLoader implements Loader{
     @Override
     public  Image setSizeImage (Image img, int width, int height) {
         img = img.getScaledInstance(width, height, Image.SCALE_DEFAULT);
-        System.out.println(img.getClass());
         return img;
     }
 
