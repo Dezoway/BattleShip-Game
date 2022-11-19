@@ -1,8 +1,8 @@
 package main;
 
 public enum BattleShips {
-    SHIPX1,
-    SHIPX2,
-    SHIPX3,
-    SHIPX4
+    x1Ship,
+    x2Ship,
+    x3Ship,
+    x4Ship
 }

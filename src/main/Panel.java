@@ -11,6 +11,7 @@ public class Panel extends JPanel {
     private static int sizeY = 70;
     public Panel(){
         this.setBounds(coordX,coordY,sizeX,sizeY);
+        this.setOpaque(false);
         coordX+=sizeX+1;
         if (counter % 10 == 0){
             coordY += sizeY-2;
