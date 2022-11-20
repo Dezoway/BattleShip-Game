@@ -2,14 +2,18 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class DialogWindow extends JPanel {
     private DialogWindow innerWindow; // поле для хранения внутреннего окна
     private ArrayList<JRadioButton> jRadioButtons;
+    private ButtonGroup buttonGroup = new ButtonGroup();
     private static ArrayList<JLabel> imageForButtons;
-
+    private JButton startGame = new JButton("Начать игру");
+    private JButton selectShip = new JButton("Выбрать");
     private  int posX;
     private  int posY;
     private  int width;
@@ -29,6 +33,10 @@ public class DialogWindow extends JPanel {
         innerWindow = new DialogWindow(0, 0, this.width,this.height-100); // инициализация внутреннего окна через конструктор с параметрами
         this.setLayout(new BorderLayout()); // Добавление во внешнее окно менеджера расположения компонентов
         this.add(innerWindow, BorderLayout.SOUTH); // Добавить компонент в окно, указать расположение через менеджера
+        JLabel label = new JLabel(Messages.PrepareShips.toString());
+        label.setFont(new Font("TimesRoman", Font.BOLD,26));
+        label.setBorder(BorderFactory.createLineBorder(Color.BLUE,3));
+        this.add(label, BorderLayout.CENTER);
 
     }
     public DialogWindow(int x, int y, int width, int height){
@@ -50,18 +58,35 @@ public class DialogWindow extends JPanel {
         int posX = 50;
         int posY = 60;
         for(int x = 1; x!= 5;x++){
-            this.jRadioButtons.add(new JRadioButton(""+x));
-            this.jRadioButtons.get(x-1).setBounds(posX,posY,50,25);
-            posY += 150;
+            this.jRadioButtons.add(new JRadioButton("Осталось "+(5-x)));
+            this.jRadioButtons.get(x-1).setBounds(posX,posY,100,25);
+            posY += 100;
         }
         posY = 60;
         for(int x = 0; x != 4;x++){
+            buttonGroup.add(jRadioButtons.get(x));
             this.add(jRadioButtons.get(x));
             imageForButtons.get(x).setBounds(posX+50,posY,150,50);
             this.add(imageForButtons.get(x));
-            posY+=150;
+            posY+=100;
 
         }
+        startGame.setBounds(200,580,120,50);
+        selectShip.setBounds(50,580,120,50);
+        selectShip.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(JRadioButton button:jRadioButtons){
+                    if (button.isSelected()){
+                        button.setText("Осталось "+(Integer.parseInt(button.getText().split(" ")[1])-1));
+                        if (button.getText().split(" ")[1].equals("0"))button.setEnabled(false);
+                    }
+                }
+            }
+        });
+        this.add(startGame);
+        this.add(selectShip);
+        startGame.setEnabled(false);
 
     }
 
