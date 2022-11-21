@@ -78,8 +78,10 @@ public class DialogWindow extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 for(JRadioButton button:jRadioButtons){
                     if (button.isSelected()){
-                        button.setText("Осталось "+(Integer.parseInt(button.getText().split(" ")[1])-1));
-                        if (button.getText().split(" ")[1].equals("0"))button.setEnabled(false);
+                        if (Integer.parseInt(button.getText().split(" ")[1]) >= 1){
+                            button.setText("Осталось "+(Integer.parseInt(button.getText().split(" ")[1])-1));
+                        }
+                        if (Integer.parseInt(button.getText().split(" ")[1]) < 1) button.setEnabled(false);
                     }
                 }
             }
