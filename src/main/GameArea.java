@@ -9,7 +9,6 @@ public class GameArea {
     public GameArea(){
         for(int x = 0; x != 100; x++){
             panels.add(new Panel());
-            Panel.counter++;
         }
         this.player = new Player();
         this.computerPlayer = new ComputerPlayer();

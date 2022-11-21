@@ -6,26 +6,39 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Panel extends JPanel {
-    protected static int counter = 1;
-    private static int coordX = 0;
-    private static int coordY = 0;
-    private static int sizeX = 63;
-    private static int sizeY = 70;
+
     public Panel(){
-        this.setBounds(coordX,coordY,sizeX,sizeY);
+        this.setPreferredSize(new Dimension(150,150));
+
         this.setOpaque(false);
-        coordX+=sizeX+1;
-        if (counter % 10 == 0){
-            coordY += sizeY-2;
-            coordX = 0;
+        this.addMouseListener(new MouseListenerEvent());
+
+    }
+    class MouseListenerEvent implements MouseListener{
+        @Override
+        public void mouseClicked(MouseEvent e) {
         }
 
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            Panel.this.setBorder(BorderFactory.createLineBorder(Color.RED,2));
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            Panel.this.setBorder(null);
+
+        }
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        g.setColor(Color.YELLOW);
-        g.drawRect(0,0,sizeX,sizeY);
-
-    }
 }

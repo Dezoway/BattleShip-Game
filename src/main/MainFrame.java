@@ -37,13 +37,18 @@ public class MainFrame extends JFrame {
         JLayeredPane jLayeredPane = getLayeredPane();
         jLayeredPane.add(dialogWindow);
         JLabel label = new JLabel();
+        JLabel label1 = new JLabel();
+        label1.setBounds(0,2,640,690);
+        label1.setLayout(new GridLayout(10,10));
+        label1.setBorder(BorderFactory.createLineBorder(Color.BLUE,4));
         Image img = (Image) imageLoader.getResource("GameArea.png");
         img =  imageLoader.setSizeImage(img, 700,750);
         label.setIcon(new ImageIcon(img));
         label.setBounds(0,0,700,760);
+        label.add(label1);
         jLayeredPane.add(label,1);
         for(int x = 0; x != area.panels.size(); x++){
-            jLayeredPane.add(area.panels.get(x),2);
+            label1.add(area.panels.get(x));
         }
 
 
