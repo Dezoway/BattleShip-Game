@@ -11,26 +11,18 @@ public class DialogWindow extends JPanel {
     private DialogWindow innerWindow; // поле для хранения внутреннего окна
     private ArrayList<JRadioButton> jRadioButtons;
     private ButtonGroup buttonGroup = new ButtonGroup();
-    private static ArrayList<JLabel> imageForButtons;
+    private static  ArrayList<JLabel> ships;
     private JButton startGame = new JButton("Начать игру");
-    private JButton selectShip = new JButton("Выбрать");
-    private  int posX;
-    private  int posY;
-    private  int width;
-    private  int height;
+    public static int selectedButton;
 
-    public DialogWindow(ArrayList<JLabel> icons){
+    public DialogWindow(ArrayList<JLabel> shipsLabels){
         /*
         Конструктор для внешнего окна
          */
-        imageForButtons = icons; // Готовые иконки кораблей, полученные из MainFrame
-        this.posX = 700;
-        this.posY = 0;
-        this.width = 385;
-        this.height = 750;
-        this.setBounds(this.posX, this.posY, this.width, this.height); // расположение диалогового окна на главном фрейме
+        ships = shipsLabels; // Готовые иконки кораблей, полученные из MainFrame
+        this.setBounds(700,0,385,750); // расположение диалогового окна на главном фрейме
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK,4)); // Выделить границы внешнего окна
-        innerWindow = new DialogWindow(0, 0, this.width,this.height-100); // инициализация внутреннего окна через конструктор с параметрами
+        innerWindow = new DialogWindow(0, 0, this.getWidth(),this.getHeight()-100); // инициализация внутреннего окна через конструктор с параметрами
         this.setLayout(new BorderLayout()); // Добавление во внешнее окно менеджера расположения компонентов
         this.add(innerWindow, BorderLayout.SOUTH); // Добавить компонент в окно, указать расположение через менеджера
         JLabel label = new JLabel(Messages.PrepareShips.toString());
@@ -43,12 +35,8 @@ public class DialogWindow extends JPanel {
         /*
         Конструктор для внутреннего окна
          */
-        this.posX = x;
-        this.posY = y;
-        this.width = width;
-        this.height = height;
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK,2)); // Выделить границы внутреннего окна
-        this.setPreferredSize(new Dimension(this.width, this.height));
+        this.setPreferredSize(new Dimension(width, height));
         this.setLayout(null); // Установить во внутреннем окне абсолютное позционирование
         this.initialButtons();
     }
@@ -65,30 +53,24 @@ public class DialogWindow extends JPanel {
         posY = 60;
         for(int x = 0; x != 4;x++){
             buttonGroup.add(jRadioButtons.get(x));
+            jRadioButtons.get(x).addActionListener(new ButtonListener());
             this.add(jRadioButtons.get(x));
-            imageForButtons.get(x).setBounds(posX+50,posY,150,50);
-            this.add(imageForButtons.get(x));
+            ships.get(x).setBounds(posX+80,posY,150,50);
+            this.add(ships.get(x));
             posY+=100;
 
         }
-        startGame.setBounds(200,580,120,50);
-        selectShip.setBounds(50,580,120,50);
-        selectShip.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for(JRadioButton button:jRadioButtons){
-                    if (button.isSelected()){
-                        if (Integer.parseInt(button.getText().split(" ")[1]) >= 1){
-                            button.setText("Осталось "+(Integer.parseInt(button.getText().split(" ")[1])-1));
-                        }
-                        if (Integer.parseInt(button.getText().split(" ")[1]) < 1) button.setEnabled(false);
-                    }
-                }
-            }
-        });
+        startGame.setBounds(50,580,120,50);
         this.add(startGame);
-        this.add(selectShip);
         startGame.setEnabled(false);
+
+    }
+    private class ButtonListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DialogWindow.selectedButton = jRadioButtons.indexOf((JRadioButton) e.getSource())+1;
+
+        }
 
     }
 

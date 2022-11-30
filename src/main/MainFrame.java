@@ -24,9 +24,9 @@ public class MainFrame extends JFrame {
         soundLoader = new SoundLoader();
         animationLoader = new AnimationLoader();
         area = new GameArea();
-        this.dialogWindow = new DialogWindow(area.getPlayer().getShips().stream()
-                .map(x->new JLabel(new ImageIcon(imageLoader.setSizeImage(x.shipImage.getImage(), 160,160))))
-                .collect(Collectors.toCollection(ArrayList::new))); // Лямбда-выражение для получения иконок кораблей из объектов класса BattleShip
+        this.dialogWindow = new DialogWindow(area.getPlayer().getShips().stream().map(x->new JLabel(new ImageIcon(imageLoader.
+                setSizeImage(x.getShipImage(), 210, 250)))).
+                collect(Collectors.toCollection(ArrayList::new)));
         prepareFrame(); // Метод для создания окон
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -36,21 +36,6 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
         JLayeredPane jLayeredPane = getLayeredPane();
         jLayeredPane.add(dialogWindow);
-        JLabel label = new JLabel();
-        JLabel label1 = new JLabel();
-        label1.setBounds(0,2,640,690);
-        label1.setLayout(new GridLayout(10,10));
-        label1.setBorder(BorderFactory.createLineBorder(Color.BLUE,4));
-        Image img = (Image) imageLoader.getResource("GameArea.png");
-        img =  imageLoader.setSizeImage(img, 700,750);
-        label.setIcon(new ImageIcon(img));
-        label.setBounds(0,0,700,760);
-        label.add(label1);
-        jLayeredPane.add(label,1);
-        for(int x = 0; x != area.panels.size(); x++){
-            label1.add(area.panels.get(x));
-        }
-
-
+        jLayeredPane.add(this.area,1);
     }
 }

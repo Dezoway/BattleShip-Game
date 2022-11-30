@@ -4,14 +4,20 @@ import javax.imageio.ImageReader;
 import javax.swing.*;
 import java.awt.*;
 
-public class BattleShip {
+public class BattleShip extends JLabel{
     public BattleShips typeBattleShip;
-    public ImageIcon shipImage;
-    public int headPositionX;
-    public int getHeadPositionY;
+    public boolean isActive = false;
+    private Image shipImage;
 
-    public BattleShip(BattleShips type){
+    public BattleShip(BattleShips type, int sizeX, int sizeY){
         this.typeBattleShip = type;
-        this.shipImage = new ImageIcon((Image)new ImageLoader().getResource(type.name()+".png"));
+        ImageLoader loader = new ImageLoader();
+        this.shipImage = (Image) loader.getResource(type.name()+".png");
+        this.setHorizontalAlignment(CENTER);
+        this.setIcon(new ImageIcon(loader.setSizeImage(this.shipImage, sizeX,sizeY)));
+    }
+
+    public Image getShipImage(){
+        return this.shipImage;
     }
 }
