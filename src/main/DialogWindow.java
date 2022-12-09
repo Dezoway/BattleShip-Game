@@ -5,14 +5,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class DialogWindow extends JPanel {
     private DialogWindow innerWindow; // поле для хранения внутреннего окна
     private ArrayList<JRadioButton> jRadioButtons;
-    private ButtonGroup buttonGroup = new ButtonGroup();
+    private ButtonGroup buttonGroupShips = new ButtonGroup();
+    private ButtonGroup buttonGroupOrientation = new ButtonGroup();
     private static  ArrayList<JLabel> ships;
     private JButton startGame = new JButton("Начать игру");
+    public static JRadioButton instanceShipButton;
+    private JButton clearArea = new JButton("Отменить расстановку");
+    private static JRadioButton orientationX;
+    private static JRadioButton orientationY;
     public static int selectedButton;
 
     public DialogWindow(ArrayList<JLabel> shipsLabels){
@@ -40,8 +47,20 @@ public class DialogWindow extends JPanel {
         this.setLayout(null); // Установить во внутреннем окне абсолютное позционирование
         this.initialButtons();
     }
+    public static int getOrientation(){
+        return orientationX.isSelected()? 0:1;
+    }
 
     private void initialButtons(){
+        orientationX = new JRadioButton("Горизонтальная");
+        orientationY = new JRadioButton("Вертикальная");
+        orientationX.setSelected(true); // По умолчанию горизнотальная ориентация
+        orientationX.setBounds(50,500,140,25);
+        orientationY.setBounds(200,500,140,25);
+        buttonGroupOrientation.add(orientationX);
+        buttonGroupOrientation.add(orientationY);
+        this.add(orientationX);
+        this.add(orientationY);
         this.jRadioButtons = new ArrayList<>();
         int posX = 50;
         int posY = 60;
@@ -52,7 +71,7 @@ public class DialogWindow extends JPanel {
         }
         posY = 60;
         for(int x = 0; x != 4;x++){
-            buttonGroup.add(jRadioButtons.get(x));
+            buttonGroupShips.add(jRadioButtons.get(x));
             jRadioButtons.get(x).addActionListener(new ButtonListener());
             this.add(jRadioButtons.get(x));
             ships.get(x).setBounds(posX+80,posY,150,50);
@@ -61,6 +80,8 @@ public class DialogWindow extends JPanel {
 
         }
         startGame.setBounds(50,580,120,50);
+        clearArea.setBounds(190,580,160,50);
+        this.add(clearArea);
         this.add(startGame);
         startGame.setEnabled(false);
 
@@ -68,7 +89,11 @@ public class DialogWindow extends JPanel {
     private class ButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            DialogWindow.selectedButton = jRadioButtons.indexOf((JRadioButton) e.getSource())+1;
+            if(e.getSource().getClass().equals(JRadioButton.class)) {
+                DialogWindow.selectedButton = jRadioButtons.indexOf((JRadioButton) e.getSource()) + 1;
+                instanceShipButton = jRadioButtons.get(selectedButton - 1);
+            }
+
 
         }
 

@@ -6,17 +6,19 @@ public class Player {
 
 
     private static ArrayList<BattleShip> ships = new ArrayList<>(); // Список кораблей для игрока
-    public Player(){
-        ships.add(new BattleShip(BattleShips.x1Ship,150,150));
-        ships.add(new BattleShip(BattleShips.x2Ship,60,60));
-        ships.add(new BattleShip(BattleShips.x3Ship,80,80));
-        ships.add(new BattleShip(BattleShips.x4Ship,100,100));
-        ships.add(new BattleShip(BattleShips.x2Ship,60,60));
-        ships.add(new BattleShip(BattleShips.x2Ship,60,60));
-        ships.add(new BattleShip(BattleShips.x1Ship,150,150));
-        ships.add(new BattleShip(BattleShips.x1Ship,150,150));
-        ships.add(new BattleShip(BattleShips.x1Ship,150,150));
-        ships.add(new BattleShip(BattleShips.x3Ship,80,80));
+    Panel panelSize;
+    public Player(Panel panel){
+        this.panelSize = panel;
+        ships.add(new BattleShip(BattleShips.x1Ship,panelSize));
+        ships.add(new BattleShip(BattleShips.x2Ship,panelSize));
+        ships.add(new BattleShip(BattleShips.x3Ship,panelSize));
+        ships.add(new BattleShip(BattleShips.x4Ship,panelSize));
+        ships.add(new BattleShip(BattleShips.x2Ship,panelSize));
+        ships.add(new BattleShip(BattleShips.x2Ship,panelSize));
+        ships.add(new BattleShip(BattleShips.x1Ship,panelSize));
+        ships.add(new BattleShip(BattleShips.x1Ship,panelSize));
+        ships.add(new BattleShip(BattleShips.x1Ship,panelSize));
+        ships.add(new BattleShip(BattleShips.x3Ship,panelSize));
     }
     public static ArrayList<BattleShip> getShips(){ // Геттер кораблей для игрока
         return ships;
