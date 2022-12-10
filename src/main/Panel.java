@@ -22,7 +22,7 @@ public class Panel extends JPanel {
         this.addMouseListener(new MouseListenerEvent());
 
     }
-    public void setActiveCell(){this.isActiveCell = false;}
+    public void setActiveCell(boolean val){this.isActiveCell = val;}
     public boolean getIsActiveCell(){
         return !this.isActiveCell;
     }

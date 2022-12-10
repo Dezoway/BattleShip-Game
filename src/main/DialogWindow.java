@@ -15,9 +15,9 @@ public class DialogWindow extends JPanel {
     private ButtonGroup buttonGroupShips = new ButtonGroup();
     private ButtonGroup buttonGroupOrientation = new ButtonGroup();
     private static  ArrayList<JLabel> ships;
-    private JButton startGame = new JButton("Начать игру");
+    private JButton startGame;
     public static JRadioButton instanceShipButton;
-    private JButton clearArea = new JButton("Отменить расстановку");
+    private JButton clearArea;
     private static JRadioButton orientationX;
     private static JRadioButton orientationY;
     public static int selectedButton;
@@ -38,6 +38,12 @@ public class DialogWindow extends JPanel {
         this.add(label, BorderLayout.CENTER);
 
     }
+    public ArrayList<JRadioButton> getJRadioButtons(){
+        return this.jRadioButtons;
+    }
+    public JButton getStartGame(){
+        return this.startGame;
+    }
     public DialogWindow(int x, int y, int width, int height){
         /*
         Конструктор для внутреннего окна
@@ -54,6 +60,8 @@ public class DialogWindow extends JPanel {
     private void initialButtons(){
         orientationX = new JRadioButton("Горизонтальная");
         orientationY = new JRadioButton("Вертикальная");
+        this.startGame = new JButton("Начать игру");
+        this.clearArea = new JButton("Отменить расстановку");
         orientationX.setSelected(true); // По умолчанию горизнотальная ориентация
         orientationX.setBounds(50,500,140,25);
         orientationY.setBounds(200,500,140,25);
@@ -81,6 +89,7 @@ public class DialogWindow extends JPanel {
         }
         startGame.setBounds(50,580,120,50);
         clearArea.setBounds(190,580,160,50);
+        clearArea.addActionListener(new ButtonListener());
         this.add(clearArea);
         this.add(startGame);
         startGame.setEnabled(false);
@@ -92,6 +101,15 @@ public class DialogWindow extends JPanel {
             if(e.getSource().getClass().equals(JRadioButton.class)) {
                 DialogWindow.selectedButton = jRadioButtons.indexOf((JRadioButton) e.getSource()) + 1;
                 instanceShipButton = jRadioButtons.get(selectedButton - 1);
+            }
+            if(e.getSource().getClass().equals(JButton.class)){
+                if (((JButton) e.getSource()).getText().equals("Отменить расстановку")){
+                    System.out.println("aaa");
+                    GameArea.clearArea();
+                    DialogWindow.this.removeAll();
+                    DialogWindow.this.repaint();
+                    DialogWindow.this.initialButtons();
+                }
             }
 
 

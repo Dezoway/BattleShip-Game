@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Observer;
 import java.util.stream.Collectors;
 
 public class GameArea extends JLabel {
@@ -82,6 +83,12 @@ public class GameArea extends JLabel {
         }
         if (DialogWindow.instanceShipButton.getText().split(" ")[1].equals("0"))DialogWindow.instanceShipButton.setEnabled(false);//Выключить кнопку если кораблей не осталось
         locationLabel.repaint();
+    }
+    public static void clearArea(){
+        locationLabel.removeAll();
+        locationLabel.repaint();
+        for(Panel panel: ((GameArea) locationLabel.getParent()).panels)panel.setActiveCell(true);
+        for(BattleShip ship:Player.getShips())ship.isActive=false;
     }
     public boolean checkOutBorder(BattleShip ship, int orientation){
         if (orientation==0){    //Проверка выхода за границу по оси X

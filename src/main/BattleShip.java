@@ -32,14 +32,13 @@ public class BattleShip extends JLabel{
         this.setVerticalAlignment(CENTER);
     }
 
-
     public void setEmoloyedPanels(List<Panel> panels, int index){
         this.emoloyedPanels = new ArrayList<>();
         if (orientation == 0){
-            for(int x = index; x != index + length;x++)panels.get(x).setActiveCell();
+            for(int x = index; x != index + length;x++)panels.get(x).setActiveCell(false);
         }
         else{
-            for(int x = index; x != index + 10 * length;x+=10)panels.get(x).setActiveCell();
+            for(int x = index; x != index + 10 * length;x+=10)panels.get(x).setActiveCell(false);
         }
         this.isActive=true;
     }

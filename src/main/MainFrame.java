@@ -3,6 +3,8 @@ package main;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,5 +39,23 @@ public class MainFrame extends JFrame {
         JLayeredPane jLayeredPane = getLayeredPane();
         jLayeredPane.add(dialogWindow);
         jLayeredPane.add(this.area,1);
+        this.addMouseListener(new UpdateState());
     }
+    private class UpdateState extends MouseAdapter{ // Отслеживание изменений из главного фрейма
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            DialogWindow innerWindow = (DialogWindow)((DialogWindow) MainFrame.this.getLayeredPane().getComponent(0)).getComponent(0); // Получить объект внутреннего окна
+            if(innerWindow.getJRadioButtons().stream().allMatch(x->x.getText().split(" ")[1].equals("0"))){
+                innerWindow.getStartGame().setEnabled(true);
+            }
+
+            /*DialogWindow instance = ((DialogWindow) MainFrame.this.getLayeredPane().getComponent(0));
+            if(instance.getJRadioButtons().stream().allMatch(x->x.getText().split(" ")[1].equals("0"))){
+                instance.getStartGame().setEnabled(true);
+            }*/
+
+
+        }
+    }
+
 }

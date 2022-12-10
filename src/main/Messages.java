@@ -5,6 +5,7 @@ public enum Messages {
         Набор фраз для диалогового окна во время игры
      */
     PrepareShips("Расстановка кораблей..."),
+    BattleReady("Всё готово к началу боя"),
     PrepareBattle("Расстановка кораблей противником..."),
     StartBattle("Бой начался"),
     MissFirePlayer("Вы промахнулись"),
