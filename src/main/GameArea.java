@@ -32,8 +32,29 @@ public class GameArea extends JLabel {
             tableCells.add(this.panels.get(x));
         }
         this.player = new Player((Panel) tableCells.getComponent(2)); // Создания класса игрок
-        this.computerPlayer = new ComputerPlayer((Panel) tableCells.getComponent(0)); // Создание класса компьютер
         this.add(tableCells);
+    }
+    public GameArea(TypePlayer typePlayer){
+        for(int x = 0; x!= 100;x++){
+            this.panels.add(new Panel(Color.BLUE));
+        }
+        this.setIcon(new ImageIcon(MainFrame.imageLoader.
+                setSizeImage((Image)MainFrame.imageLoader.getResource("GameArea.png"), 700,750)));
+        this.setBounds(700,0,700,760);
+        JLabel tableCells = new JLabel();
+        this.locationLabel = new JLabel();
+        locationLabel.setBounds(0,2,640,690);
+        locationLabel.setBorder(BorderFactory.createLineBorder(Color.green,4));
+        locationLabel.setLayout(null);
+        this.add(locationLabel);
+        tableCells.setBounds(0,2,640,690);
+        tableCells.setLayout(new GridLayout(10,10));
+        tableCells.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
+        for(int x = 0; x != this.panels.size();x++){
+            tableCells.add(this.panels.get(x));
+        }
+        this.add(tableCells);
+
     }
     public Player getPlayer(){
         return this.player;
@@ -87,7 +108,7 @@ public class GameArea extends JLabel {
     public static void clearArea(){
         locationLabel.removeAll();
         locationLabel.repaint();
-        for(Panel panel: ((GameArea) locationLabel.getParent()).panels)panel.setActiveCell(true);
+        //for(Panel panel: ((GameArea) locationLabel.getParent()).panels)panel.setActiveCell(false);
         for(BattleShip ship:Player.getShips())ship.isActive=false;
     }
     public boolean checkOutBorder(BattleShip ship, int orientation){

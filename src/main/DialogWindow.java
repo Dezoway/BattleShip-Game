@@ -5,10 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
-
 public class DialogWindow extends JPanel {
     private DialogWindow innerWindow; // поле для хранения внутреннего окна
     private ArrayList<JRadioButton> jRadioButtons;
@@ -62,12 +58,12 @@ public class DialogWindow extends JPanel {
         orientationY = new JRadioButton("Вертикальная");
         this.startGame = new JButton("Начать игру");
         this.clearArea = new JButton("Отменить расстановку");
-        orientationX.setSelected(true); // По умолчанию горизнотальная ориентация
         orientationX.setBounds(50,500,140,25);
         orientationY.setBounds(200,500,140,25);
         buttonGroupOrientation.add(orientationX);
         buttonGroupOrientation.add(orientationY);
-        this.add(orientationX);
+        this.add(orientationX);// По умолчанию горизнотальная ориентация
+        orientationX.setSelected(true);
         this.add(orientationY);
         this.jRadioButtons = new ArrayList<>();
         int posX = 50;
@@ -90,6 +86,7 @@ public class DialogWindow extends JPanel {
         startGame.setBounds(50,580,120,50);
         clearArea.setBounds(190,580,160,50);
         clearArea.addActionListener(new ButtonListener());
+        startGame.addActionListener(new ButtonListener());
         this.add(clearArea);
         this.add(startGame);
         startGame.setEnabled(false);
@@ -104,11 +101,14 @@ public class DialogWindow extends JPanel {
             }
             if(e.getSource().getClass().equals(JButton.class)){
                 if (((JButton) e.getSource()).getText().equals("Отменить расстановку")){
-                    System.out.println("aaa");
-                    GameArea.clearArea();
-                    DialogWindow.this.removeAll();
-                    DialogWindow.this.repaint();
-                    DialogWindow.this.initialButtons();
+                    GameArea.clearArea(); // Очистка игрового поля
+                    DialogWindow.this.removeAll(); // Удалить все компоненты внутреннего окна
+                    DialogWindow.this.initialButtons(); // Выставить все компоненты заново
+                    DialogWindow.this.repaint(); // Перерисовать окно
+                    DialogWindow.selectedButton = 0;
+                } else if (((JButton) e.getSource()).getText().equals("Начать игру")) {
+                    ((MainFrame)DialogWindow.this.getParent().getParent().getParent().getParent()).startBattle();
+
                 }
             }
 
