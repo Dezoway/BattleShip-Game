@@ -6,14 +6,16 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 
 
 public class ImageLoader implements Loader{
     @Override
     public Object getResource(String fileName) {
         try{
-            BufferedImage img= ImageIO.read(new File("src/resources/"+fileName));
+            BufferedImage img= ImageIO.read(new FileInputStream("src/resources/"+fileName));
 
             return img;
         }catch (IOException e){
@@ -23,7 +25,7 @@ public class ImageLoader implements Loader{
     }
 
     @Override
-    public  Image setSizeImage (Image img, int width, int height) {
+    public   Image setSizeImage (Image img, int width, int height) {
         img = img.getScaledInstance(width, height, Image.SCALE_DEFAULT);
         return img;
     }

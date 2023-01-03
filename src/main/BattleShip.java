@@ -17,7 +17,7 @@ public class BattleShip extends JLabel{
     private int orientation; // Ориентация корабля, если горизонтальная - 0 иначе 1
     private BufferedImage shipImage;
 
-    public BattleShip(BattleShips type, Panel panel){
+    public BattleShip(BattleShips type, TypePlayer player){
         switch (type){
             case x1Ship -> {this.length=1;}
             case x2Ship -> {this.length=2;}
@@ -26,11 +26,14 @@ public class BattleShip extends JLabel{
         }
         this.typeBattleShip = type;
         this.setLayout(new BorderLayout());
-        loader = new ImageLoader();
-        this.shipImage = (BufferedImage) loader.getResource(type.name()+".png");
-        this.setHorizontalAlignment(CENTER);
-        this.setVerticalAlignment(CENTER);
+        if(player.equals(TypePlayer.PLAYER)) {
+            loader = new ImageLoader();
+            this.shipImage = (BufferedImage) loader.getResource(type.name() + ".png");
+            this.setHorizontalAlignment(CENTER);
+            this.setVerticalAlignment(CENTER);
+        }
     }
+    public void setVerticalOrientation(){this.orientation=1;}
 
     public void setEmoloyedPanels(List<Panel> panels, int index){
         this.emoloyedPanels = new ArrayList<>();
@@ -45,6 +48,7 @@ public class BattleShip extends JLabel{
     public boolean checkCells(List<Panel> panels, int index){ // Проверка занятых клеток
         if (orientation == 0){
             for(int x = index; x != index + length;x++){
+                try{if(panels.get(x).getIsActiveCell())return true;}catch (IndexOutOfBoundsException e){}
                 try{if(panels.get(x-10).getIsActiveCell())return true;}catch (IndexOutOfBoundsException e){}//Каждая проверка обернута в обработчик, т.к может быть выбрана крайняя клетка поля
                 try{if(panels.get(x+10).getIsActiveCell())return true;}catch (IndexOutOfBoundsException e){}
                 try{if(panels.get(x-11).getIsActiveCell())return true;}catch (IndexOutOfBoundsException e){}
@@ -57,6 +61,7 @@ public class BattleShip extends JLabel{
         }
         else{
             for(int x = index; x != index + 10 * length;x+=10){
+                try{if(panels.get(x).getIsActiveCell())return true;}catch (IndexOutOfBoundsException e){}
                 try{if(panels.get(x-10).getIsActiveCell())return true;}catch (IndexOutOfBoundsException e){}
                 try{if(panels.get(x+10).getIsActiveCell())return true;}catch (IndexOutOfBoundsException e){}
                 try{if(panels.get(x-11).getIsActiveCell())return true;}catch (IndexOutOfBoundsException e){}
