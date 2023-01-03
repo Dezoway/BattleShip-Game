@@ -140,7 +140,7 @@ public class GameArea extends JLabel {
     public static void clearArea(){
         locationLabel.removeAll();
         locationLabel.repaint();
-        for(Panel panel: GameArea.playerPanels)panel.setActiveCell(false);
+        for(Panel panel: GameArea.playerPanels)panel.setActiveCell(true);
         for(BattleShip ship:Player.getShips())ship.isActive=false;
     }
     public boolean checkOutBorder(BattleShip ship, int orientation){
